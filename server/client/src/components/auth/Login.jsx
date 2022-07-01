@@ -54,6 +54,7 @@ const Login = () => {
               type="password"
               placeholder="Password"
               className="block w-72 border border-stone-700 px-3 py-2 rounded-md mb-3"
+              autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
             />
 
