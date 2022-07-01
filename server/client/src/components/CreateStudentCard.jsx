@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import AddForm from "./inputForm/AddForm";
 import UpdateForm from "./inputForm/UpdateForm";
 import axios from 'axios';
@@ -17,9 +17,10 @@ const CreateStudentCard = ({
   college,
   setCollege,
 }) => {
+  const [aa, setAA] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("https://stuentslist-management.herokuapp.com/students", {
+    await axios.post("https://students-management-list.herokuapp.com/students", {
         name,
         email,
         phone,
@@ -27,6 +28,7 @@ const CreateStudentCard = ({
       })
       .then((res) => {
         alert(res.data.message);
+        setAA(res.data.data);
         getStudents();
       })
       .catch((err) => {
@@ -39,12 +41,14 @@ const CreateStudentCard = ({
     setCollege("");
   };
 
+  console.log(aa);
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     setShow(false);
     const id = studentId;
     console.log("Clicked");
-    await axios.put(`https://stuentslist-management.herokuapp.com/students/${id}`, {
+    await axios.put(`https://students-management-list.herokuapp.com/students/${id}`, {
         name,
         email,
         phone,

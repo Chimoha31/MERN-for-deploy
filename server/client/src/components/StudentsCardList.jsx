@@ -22,17 +22,13 @@ const StudentsCardList = ({ show, setShow }) => {
     setShow(true);
   };
 
-  useEffect(() => {
-    getStudents();
-    // eslint-disable-next-line
-  }, []);
 
   const getStudent = async (id) => {
     getStudentIdHandler(id);
     console.log(studentId);
     setAdd("Update");
     setShow(true);
-    await axios.get(`https://stuentslist-management.herokuapp.com/students/${id}`, {
+    await axios.get(`https://students-management-list.herokuapp.com/students/${id}`, {
         name,
         email,
         phone,
@@ -50,9 +46,10 @@ const StudentsCardList = ({ show, setShow }) => {
   };
 
   const getStudents = async () => {
-    await axios.get("https://stuentslist-management.herokuapp.com/students")
+    await axios.get("https://students-management-list.herokuapp.com/students")
       .then((res) => {
         setStudentsList(res.data.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -64,8 +61,9 @@ const StudentsCardList = ({ show, setShow }) => {
     setCollege("");
   };
 
+  
   const handleDelete = async (id) => {
-    axios.delete(`https://stuentslist-management.herokuapp.com/students/${id}`)
+    await axios.delete(`https://students-management-list.herokuapp.com/students/${id}`)
       .then((res) => {
         getStudents();
       })
@@ -73,6 +71,12 @@ const StudentsCardList = ({ show, setShow }) => {
         console.log(err);
       });
   };
+
+ 
+  useEffect(() => {
+    getStudents();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Fragment>
@@ -106,15 +110,15 @@ const StudentsCardList = ({ show, setShow }) => {
       {student && (
         <p className="text-center mt-1 mb-4">
           Welcome,
-          <strong className="text-lime-700 text-xl">{student.email}</strong>
+          <strong className="text-lime-700 text-xl">{student?.email}</strong>
         </p>
       )}
 
       <div className="flex justify-center flex-wrap gap-5">
-        {studentsList.map((student) => (
+        {/* {studentsList.map((student) => (
           <ul
             className="border border-gray-900 flex flex-col py-2 px-3 w-72 rounded-lg shadow-stone-200 shadow-md"
-            key={student._id}
+            key={student?._id}
           >
             <li className="flex flex-col items-center py-2 px-0">
               <img
@@ -125,26 +129,26 @@ const StudentsCardList = ({ show, setShow }) => {
             </li>
             <li>
               <label>【Name】</label>
-              <h4>{student.name}</h4>
+              <h4>{student?.name}</h4>
             </li>
             <li>
               <label>【Email】</label>
-              <p>{student.email}</p>
+              <p>{student?.email}</p>
             </li>
             <li>
               <label>【Phone】</label>
-              <p>{student.phone}</p>
+              <p>{student?.phone}</p>
             </li>
             <li>
               <label>【College】</label>
-              <p className="mb-0">{student.college}</p>
+              <p className="mb-0">{student?.college}</p>
             </li>
             <li className="flex justify-end gap-3">
-              <EditButton getStudent={() => getStudent(student._id)} />
-              <DeleteButton handleDelete={() => handleDelete(student._id)} />
+              <EditButton getStudent={() => getStudent(student?._id)} />
+              <DeleteButton handleDelete={() => handleDelete(student?._id)} />
             </li>
           </ul>
-        ))}
+        ))} */}
       </div>
     </Fragment>
   );
